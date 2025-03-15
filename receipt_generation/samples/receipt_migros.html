@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <link rel="stylesheet" href="styles_migros.css"/>
+    <title>Receipt</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fragment+Mono:ital@0;1&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap"
+          rel="stylesheet">
+</head>
+<body>
+
+<div class="wrapper">
+    <div class="receipt">
+        <div class="section title">
+            <h1>MIGROS</h1>
+        </div>
+
+        <div class="body">
+            <div class="section address">
+                <p>M Luzern Bahnhof</p>
+                <p>Tel. 012 345 67 89</p>
+                <p>Genossenschaft Migros Aare</p>
+                <p>Industriestrasse 20, 3321 Schönbühl</p>
+            </div>
+
+            <div class="section product-table">
+                <table>
+                    <tr>
+                        <th>Artikelbezeichnung</th>
+                        <th>Menge</th>
+                        <th>Preis</th>
+                        <th>Gespart</th>
+                        <th>Total</th>
+                        <th>#</th>
+                    </tr>
+                    <tr>
+                        <td>Pizza</td>
+                        <td>1</td>
+                        <td>7.9O</td>
+                        <td></td>
+                        <td>7.90</td>
+                        <td>2</td>
+                    </tr>
+                    <tr>
+                        <td>Dosenbier</td>
+                        <td>2</td>
+                        <td>10.50</td>
+                        <td>2.00</td>
+                        <td>17.00</td>
+                        <td>2</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="section total">
+                <span class="border" style="top: -2mm; left: 0; width: 100%;"></span>
+                <span class="border" style="bottom: -2mm; left: 0; width: 100%;"></span>
+                <div class="content-split">
+                    <h2>Total CHF</h2>
+                    <h2>24.9O</h2>
+                </div>
+                <div class="content-split">
+                    <span>Mastercard</span>
+                    <span>24.90</span>
+                </div>
+                <div class="content-split">
+                    <span>Total in EUR</span>
+                    <span>26.09</span>
+                </div>
+            </div>
+
+            <div class="section payment center">
+                <div>
+                    <p>Buchung</p>
+                    <p>Debit Mastercard Contactless</p>
+                    <p>XXXXXXXXXXXX1234</p>
+                    <div class="content-split">
+                        <span>01.02.2025</span>
+                        <span>10:20</span>
+                    </div>
+                    <p>12345678*12345678/1A2B3C/00000000001#</p>
+                    <div class="content-split">
+                        <span>Total-EFT CHF:</span>
+                        <span>24.90</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section loyalty-program">
+                <span class="border" style="top: -2mm; left: 0; width: 100%;"></span>
+                <div class="content-split">
+                    <span>Cumulus-Nummer</span>
+                    <span>1234.123.123.123</span>
+                </div>
+                <div class="content-split">
+                    <span>Punktestand per 05.01.2025</span>
+                    <span>100</span>
+                </div>
+                <div class="content-split">
+                    <span>Erhaltene Punkte</span>
+                    <span>24.00</span>
+                </div>
+            </div>
+
+            <div class="section tax">
+                <span class="border" style="top: -2mm; left: 0; width: 100%;"></span>
+                <span class="border" style="bottom: -2mm; left: 0; width: 100%;"></span>
+                <div class="content-split">
+                    <span># MWST.-Nummer</span>
+                    <span>CHE-123.123.123 MWST</span>
+                </div>
+                <table>
+                    <tr>
+                        <th>GR</th>
+                        <th>Satz</th>
+                        <th>TOTAL</th>
+                        <th>MWST</th>
+                    </tr>
+                    <tr>
+                        <td>0</td>
+                        <td>2.60 %</td>
+                        <td>24.90</td>
+                        <td>0.65</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="section thank">
+                <span>Besten Dank für Ihren Einkauf!</span>
+            </div>
+
+            <div class="section id-code">
+                <div class="center">
+                    <div style="height: 16mm; width: 32mm; background: black;"></div>
+                </div>
+            </div>
+
+            <div class="section technical-details">
+                <span>010101010101010010101010101001010101</span>
+                <table>
+                    <tr>
+                        <th>Filiale</th>
+                        <th>Bedien.</th>
+                        <th>KNr</th>
+                        <th>Bon</th>
+                        <th>Datum</th>
+                        <th>Zeit</th>
+                    </tr>
+                    <tr>
+                        <td>0123456</td>
+                        <td>0123456</td>
+                        <td>123</td>
+                        <td>0123</td>
+                        <td>01.02.2025</td>
+                        <td>10:20:30 C</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

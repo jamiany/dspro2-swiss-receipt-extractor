@@ -1,0 +1,156 @@
+
+html, body, h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+}
+
+html, th, td {
+    /*
+    font-family: "Courier New";
+    font-size: 14px;
+    font-weight: normal;
+     */
+
+    /*
+    font-family: "Fragment Mono", monospace;
+    font-weight: 400;
+    font-style: normal;
+     */
+
+    font-family: "Roboto Mono", monospace;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+
+    font-size: 14px;
+    line-height: 14px;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+h1 {
+    font-family: Arial;
+    font-size: 60px;
+    line-height: 60px;
+    font-weight: 700;
+}
+
+h2 {
+    font-size: 30px;
+    line-height: 30px;
+    font-weight: 700;
+}
+
+h3 {
+    font-size: 20px;
+    line-height: 20px;
+    font-weight: 400;
+}
+
+td, th {
+    white-space: pre;
+}
+
+.wrapper {
+    width: 80mm;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.content-split {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.receipt {
+    width: 66mm;
+    padding: 7mm;
+    background-color: white;
+
+    text-align: center;
+}
+
+.receipt .body {
+    width: 132mm;
+    transform: scaleX(0.5);
+    transform-origin: left;
+}
+
+/* SECTIONS */
+
+.section {
+    position: relative;
+    margin: 5mm 0;
+}
+
+.total h2 {
+    margin-bottom: 3mm;
+}
+
+.border-constraint {
+    position: relative;
+}
+
+.border {
+    position: absolute;
+    border-bottom: 2px dashed black;
+}
+
+/* SPECIFIC */
+
+table {
+    width: 100%;
+    text-align: right;
+
+    border-spacing: 0;
+
+    font-size: 14px;
+    line-height: 14px;
+}
+
+.product-table table td:first-child, table th:first-child {
+    text-align: left;
+}
+
+.product-table table tr:first-child th {
+    padding-bottom: 5mm;
+}
+
+.total {
+    margin-top: 10mm;
+}
+
+.payment {
+    margin: 6mm 0 10mm 0;
+}
+
+.payment div {
+    width: 112mm;
+    word-wrap: break-word;
+    word-break: break-all;
+    text-align: left;
+}
+
+.tax {
+    text-align: left;
+}
+
+.tax table {
+    width: 84mm;
+}
+
+.coupon table td:first-child {
+    text-align: left;
+}
+
+.loyalty-program {
+    text-align: left;
+}
+
+.loyalty-program table td:first-child {
+    text-align: left;
+}

@@ -1,0 +1,147 @@
+
+html, body, h1, h2, h3, h4, h5, h6, p {
+    margin: 0;
+}
+
+html, th, td {
+    /*
+    font-family: "Courier New";
+    font-size: 14px;
+    font-weight: normal;
+     */
+
+    /*
+    font-family: "Fragment Mono", monospace;
+    font-weight: 400;
+    font-style: normal;
+     */
+
+    font-family: "Roboto Mono", monospace;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+
+    font-size: 13px;
+    line-height: 13px;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+h1 {
+    font-family: Arial;
+    font-size: 45px;
+    line-height: 45px;
+    font-weight: 700;
+}
+
+h2 {
+    font-size: 22px;
+    line-height: 22px;
+    font-weight: 700;
+}
+
+td {
+    white-space: pre;
+}
+
+.wrapper {
+    width: 100vw;
+    height: 100vh;
+    background-color: lightgray;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.content-split {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    padding-right: 2mm;
+}
+
+.receipt {
+    width: 70mm;
+    padding: 5mm 5mm 0 5mm;
+    background-color: #6E918D;
+
+    text-align: center;
+}
+
+.receipt .body {
+    width: 140mm;
+    transform: scaleX(0.5);
+    transform-origin: left;
+}
+
+/* SECTIONS */
+
+.section {
+    position: relative;
+    margin: 4mm 0;
+}
+
+.total h2 {
+    margin-bottom: 2mm;
+}
+
+.border-constraint {
+    position: relative;
+}
+
+.border {
+    position: absolute;
+    border-bottom: 2px dashed black;
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+}
+
+/* SPECIFIC */
+
+table {
+    width: 100%;
+    text-align: left;
+
+    border-spacing: 0;
+
+    font-size: 13px;
+    line-height: 13px;
+}
+
+.product-table table th:nth-last-child(-n + 4), .product-table table td:nth-last-child(-n + 4) {
+    text-align: right;
+}
+
+.product-table table tr:first-child th {
+    padding-bottom: 3mm;
+}
+
+.payment div {
+    width: 76mm;
+    word-wrap: break-word;
+    word-break: break-all;
+    text-align: left;
+}
+
+.tax {
+    text-align: left;
+}
+
+.tax table {
+    padding-right: 2mm;
+}
+
+.tax table td:nth-last-child(-n + 2), .tax table th:nth-last-child(-n + 2) {
+    text-align: right;
+}
+
+.technical-details {
+    margin-bottom: 2mm;
+}
