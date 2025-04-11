@@ -1,6 +1,6 @@
 # DSPRO2 - HSLU AI/ML Swiss Receipt Extractor
 
-## Project Memebers
+## Project Members
 
 - Jamian Rajakone
 - Tamino Walter
