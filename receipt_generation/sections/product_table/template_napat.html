@@ -1,0 +1,54 @@
+<style>
+.product-table td:first-child, table th:first-child {
+    text-align: left;
+}
+
+.product-table tr:first-child th {
+    padding-bottom: 5mm;
+}
+
+th, td {
+    font-family: monospace;
+    font-weight: 400;
+    font-style: normal;
+
+    font-size: 14px;
+    line-height: 14px;
+
+    white-space: pre;
+}
+</style>
+<div class="section product-table">
+    <table>
+        <tr>
+            <th>Artikel</th>
+            <th>Menge</th>
+            <th>Preis</th>
+            <th>Aktion</th>
+            <th>Total    </th>
+        </tr>
+        {% for product in products %}
+            <tr>
+                <td>{{ product.name }}</td>
+                <td>{{ product.amount }}</td>
+                <td>{{ product.price }}</td>
+                {% if product.discounted_price != product.price %}
+                    <td>{{ product.discounted_price }}</td>
+                {% else %}
+                    <td></td>
+                {% endif %}
+                <td>{{ product.total }} {{ product.tax_id }}  </td>
+            </tr>
+
+            {% if product.discount != '0.00' %}
+                <tr>
+                    <td class="bold">  Rabatt TODO</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="bold">{{ product.discount }}-   </td>
+                </tr>
+            {% endif %}
+        {% endfor %}
+    </table>
+</div>
