@@ -1,5 +1,3 @@
-from uuid import uuid4
-
 from PIL import Image
 from html2image import Html2Image
 import numpy as np
@@ -14,7 +12,8 @@ def render_html(name):
             '--hide-scrollbars',
             '--headless',
         ],
-        output_path='temp'
+        output_path='temp',
+        disable_logging=True,
     )
     hti.screenshot(html_file=f'temp/{name}.html', css_file='templates/styles_coop.css', save_as=f'{name}.png')
 
@@ -39,7 +38,7 @@ def render_html(name):
 
     # add printing error lines
     for _ in range(rng.randint(0, 6)):
-        line_pos = rng.randint(0, image_array.shape[1] + 1)
+        line_pos = rng.randint(0, image_array.shape[1])
         background[:, line_pos, :] = background_color
 
     # convert noise overlay to an image
@@ -55,16 +54,98 @@ def render_html(name):
 
     background = cv2.imread('images/background.jpg', cv2.IMREAD_COLOR)
 
-    background = cv2.resize(background, (2376, 1584))
-    background = background[150:150 + 1100, 750:750 + 800]
+    height, width = img.shape[:2]
+    background_height, background_width = background.shape[:2]
 
-    width = img.shape[1]
-    height = img.shape[0]
+    x_offset = (background_width - width) // 2
+    y_offset = (background_height - height) // 2
 
-    pos_from = np.float32([[0, 0], [width, 0], [0, height], [width, height]])
-    pos_to = np.float32([[200, 50], [600, 50], [50, 1000], [750, 1000]])
+    background[y_offset:y_offset+height, x_offset:x_offset+width] = img
+
+    zoom = rng.randint(-10, 11)
+    rotation = rng.randint(-30, 31)
+    forward_tilt = rng.randint(-25, 26)
+    sideways_tilt = rng.randint(-25, 26)
+
+    pos_from, pos_to = get_to_transformation(
+        background_width,
+        background_height,
+        zoom=zoom,
+        rotation=rotation,
+        forward_tilt=forward_tilt,
+        sideways_tilt=sideways_tilt,
+    )
 
     matrix = cv2.getPerspectiveTransform(pos_from, pos_to)
-    result = cv2.warpPerspective(img, matrix, (800, 1100), background, borderMode=cv2.BORDER_TRANSPARENT)
+    result = cv2.warpPerspective(background, matrix, (1000, 1000), borderMode=cv2.BORDER_TRANSPARENT)
+
+    if rng.rand() > 0.90:
+        pass
+        # result = cv2.rotate(result, cv2.ROTATE_180)
 
     cv2.imwrite(f'temp/{name}.png', result)
+
+
+def get_to_transformation(width, height, zoom=0, rotation=0, forward_tilt=0, sideways_tilt=0):
+    canvas_size = 1000
+    cx = width // 2
+    cy = height // 2
+
+    # change center to center of receipt
+    object_points = np.array([
+        [-cx, -cy, 0],
+        [cx, -cy, 0],
+        [cx, cy, 0],
+        [-cx, cy, 0]
+    ], dtype=np.float32)
+
+    # camera matrix
+    focal_length = 1000
+    camera_matrix = np.array([
+        [focal_length, 0, 0],
+        [0, focal_length, 0],
+        [0, 0, 1]
+    ], dtype=np.float64)
+
+    # define transformation variables
+    tilt_deg = forward_tilt
+    yaw_deg = sideways_tilt
+    roll_deg = rotation
+    distance = 1750 * (1 - zoom / 50)
+
+    # convert degrees to radians
+    tilt = np.deg2rad(tilt_deg)
+    yaw = np.deg2rad(yaw_deg)
+    roll = np.deg2rad(roll_deg)
+
+    # create rotation matrix
+    rotation_x = cv2.Rodrigues(np.array([tilt, 0, 0]))[0]
+    rotation_y = cv2.Rodrigues(np.array([0, yaw, 0]))[0]
+    rotation_z = cv2.Rodrigues(np.array([0, 0, roll]))[0]
+    rotation_matrix, _ = cv2.Rodrigues(rotation_z @ rotation_y @ rotation_x)
+
+    tvec = np.array([[0], [0], [distance]], dtype=np.float64)
+    dist_coeffs = np.zeros((4, 1))
+
+    # project points on the 2D plane
+    dst_pts, _ = cv2.projectPoints(object_points, rotation_matrix, tvec, camera_matrix, dist_coeffs)
+    dst_pts = dst_pts.reshape(-1, 2).astype(np.float32)
+
+    # shift projected points to center of canvas
+    canvas_center = np.array([canvas_size / 2, canvas_size / 2], dtype=np.float32)
+    dst_pts += canvas_center
+
+    # shift points with a random offset
+    offset = np.array([rng.randint(0, 150), rng.randint(0, 150)], dtype=np.float32)
+    dst_pts += offset
+
+    # source of the image points
+    src_pts = np.array([
+        [0, 0],
+        [width, 0],
+        [width, height],
+        [0, height]
+    ], dtype=np.float32)
+
+    return src_pts, dst_pts
+

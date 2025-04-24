@@ -17,13 +17,13 @@ def generate_receipt_data():
 
     for _ in range(fake.random_int(1, 20)):
         # prices between 0.45 - 50.00
-        price_baseline = fake.random_int(9, 1000)
+        price_baseline = random_price()
 
         # approximately 7% probability to use decimal amount
         if fake.random_int(0, 14) >= 14:
             amount = '%.3f' % (float(fake.random_int(10, 2999)) / 1000)
         else:
-            amount = fake.random_int(1, 10)
+            amount = random_amount()
 
         # 5% probability to add a discount
         discount_baseline = 0
@@ -79,6 +79,51 @@ def generate_receipt_data():
             'total_discount': price_from_baseline(overall_discount_baseline),
         }
     }
+
+
+def generate_label(data):
+    products = []
+
+    for product in data['purchase']['products']:
+        discounted_price = None
+        if not product['discounted_price'] == product['price']:
+            discounted_price = float(product['discounted_price'])
+
+        products.append({
+            'name': product['name'],
+            'amount': product['amount'],
+            'unit_price': float(product['price']),
+            'discounted_price': discounted_price,
+            'price': float(product['total']),
+        })
+
+    return {
+        'shop_name': data['shop']['chain'],
+        'date': data['meta']['date'].strftime("%d.%m.%Y"),
+        'time': data['meta']['time'].strftime("%H:%M"),
+        'total_price': float(data['purchase']['total_price']),
+        'products': products,
+    }
+
+
+def random_price():
+    price_baseline = fake.random_int(9, 200)
+
+    i = 0
+    while i < 5 and fake.random_int(0, 1) == 0:
+        price_baseline += fake.random_int(1, 200)
+        i += 1
+
+    return price_baseline
+
+
+def random_amount():
+    amount = 1
+
+    while fake.random_int(0, 1) == 0:
+        amount += 1
+
+    return amount
 
 
 def price_from_baseline(baseline):
