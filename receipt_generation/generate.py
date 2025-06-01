@@ -3,10 +3,12 @@ import os
 from multiprocessing import Pool
 from uuid import uuid4
 
+import cv2
 import numpy.random as rng
 
 from base.receipt import generate_receipt_data, generate_label
 from generate_html import generate_html_receipt
+from preprocessing.extraction.extract_receipt import extract_receipt
 from render_html import render_html
 
 
@@ -27,16 +29,21 @@ def process(input):
 
     generate_html_receipt(name, data)
 
-    render_html(name)
+    image_result = render_html(name)
 
-    with open(f'temp/{name}.json', 'w') as f:
-        f.write(json.dumps(generate_label(data), ensure_ascii=False))
+    preprocessed = None
+    try:
+        preprocessed = extract_receipt(image_result)
+    except Exception:
+        pass
 
-    write_output(name)
-
-
-def write_output(name):
+    # Save the result
     os.mkdir(f'out/{name}')
-    os.rename(f'temp/{name}.png', f'out/{name}/input.png')
-    os.rename(f'temp/{name}.json', f'out/{name}/label.json')
+
+    cv2.imwrite(f'out/{name}/input.jpg', image_result)
+    if preprocessed is not None:
+        cv2.imwrite(f'out/{name}/preprocessed.jpg', preprocessed)
+
+    with open(f'out/{name}/label.json', 'w') as f:
+        f.write(json.dumps(generate_label(data), ensure_ascii=False))
 

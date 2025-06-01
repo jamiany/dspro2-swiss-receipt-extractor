@@ -62,14 +62,17 @@ def render_html(name):
 
     background[y_offset:y_offset+height, x_offset:x_offset+width] = img
 
+    dsize = (1736, 2312)
+
     zoom = rng.randint(-10, 11)
-    rotation = rng.randint(-30, 31)
-    forward_tilt = rng.randint(-25, 26)
-    sideways_tilt = rng.randint(-25, 26)
+    rotation = rng.randint(-18, 19)
+    forward_tilt = rng.randint(-11, 12)
+    sideways_tilt = rng.randint(-11, 12)
 
     pos_from, pos_to = get_to_transformation(
         background_width,
         background_height,
+        dsize,
         zoom=zoom,
         rotation=rotation,
         forward_tilt=forward_tilt,
@@ -77,17 +80,25 @@ def render_html(name):
     )
 
     matrix = cv2.getPerspectiveTransform(pos_from, pos_to)
-    result = cv2.warpPerspective(background, matrix, (1000, 1000), borderMode=cv2.BORDER_TRANSPARENT)
+    result = cv2.warpPerspective(background, matrix, dsize, borderMode=cv2.BORDER_TRANSPARENT)
 
     if rng.rand() > 0.90:
         pass
         # result = cv2.rotate(result, cv2.ROTATE_180)
 
-    cv2.imwrite(f'temp/{name}.png', result)
+    return result
 
 
-def get_to_transformation(width, height, zoom=0, rotation=0, forward_tilt=0, sideways_tilt=0):
-    canvas_size = 1000
+def has_off_screen_corner(corners, dsize):
+    for corner in corners:
+        if corner[0] < 0 or corner[0] > dsize[0]:
+            return True
+        if corner[1] < 0 or corner[1] > dsize[1]:
+            return True
+    return False
+
+
+def get_to_transformation(width, height, dsize, zoom=0, rotation=0, forward_tilt=0, sideways_tilt=0):
     cx = width // 2
     cy = height // 2
 
@@ -111,7 +122,7 @@ def get_to_transformation(width, height, zoom=0, rotation=0, forward_tilt=0, sid
     tilt_deg = forward_tilt
     yaw_deg = sideways_tilt
     roll_deg = rotation
-    distance = 1750 * (1 - zoom / 50)
+    distance = 1000 * (1 - zoom / 40)
 
     # convert degrees to radians
     tilt = np.deg2rad(tilt_deg)
@@ -132,7 +143,7 @@ def get_to_transformation(width, height, zoom=0, rotation=0, forward_tilt=0, sid
     dst_pts = dst_pts.reshape(-1, 2).astype(np.float32)
 
     # shift projected points to center of canvas
-    canvas_center = np.array([canvas_size / 2, canvas_size / 2], dtype=np.float32)
+    canvas_center = np.array([dsize[0] / 2, dsize[1] / 2], dtype=np.float32)
     dst_pts += canvas_center
 
     # shift points with a random offset
