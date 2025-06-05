@@ -17,8 +17,8 @@ def generate(count):
 
     map = {}
 
-    for _ in range(count):
-        map[str(uuid4())] = generate_receipt_data()
+    for i in range(count):
+        map[i] = generate_receipt_data()
 
     with Pool() as pool:
         pool.map(process, map.items())
@@ -38,12 +38,11 @@ def process(input):
         pass
 
     # Save the result
-    os.mkdir(f'out/{name}')
 
-    cv2.imwrite(f'out/{name}/input.jpg', image_result)
+    # cv2.imwrite(f'out/{name}/input.jpg', image_result)
     if preprocessed is not None:
-        cv2.imwrite(f'out/{name}/preprocessed.jpg', preprocessed)
+        cv2.imwrite(f'out/{name:04d}.jpg', preprocessed)
 
-    with open(f'out/{name}/label.json', 'w') as f:
+    with open(f'out/{name:04d}.json', 'w') as f:
         f.write(json.dumps(generate_label(data), ensure_ascii=False))
 

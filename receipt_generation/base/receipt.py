@@ -15,7 +15,7 @@ def generate_receipt_data():
     overall_total_baseline = 0
     overall_discount_baseline = 0
 
-    for _ in range(fake.random_int(1, 20)):
+    for _ in range(fake.random_int(1, 7)):
         # prices between 0.45 - 50.00
         price_baseline = random_price()
 
@@ -41,10 +41,7 @@ def generate_receipt_data():
             'name': fake.grocery(),
             'amount': amount,
             'price': price_from_baseline(price_baseline),
-            'discount': price_from_baseline(discount_baseline),
-            'discounted_price': price_from_baseline(discounted_price_baseline),
             'total': price_from_baseline(total_baseline),
-            'tax_id': 0,
         })
 
     chain = fake.chain()
@@ -90,19 +87,16 @@ def generate_label(data):
             discounted_price = float(product['discounted_price'])
 
         products.append({
-            'name': product['name'],
-            'amount': product['amount'],
-            'unit_price': float(product['price']),
-            'discounted_price': discounted_price,
-            'price': float(product['total']),
+            'nm': product['name'],
+            'cnt': str(product['amount']),
+            'price': str(float(product['total'])),
         })
 
     return {
-        'shop_name': data['shop']['chain'],
-        'date': data['meta']['date'].strftime("%d.%m.%Y"),
-        'time': data['meta']['time'].strftime("%H:%M"),
-        'total_price': float(data['purchase']['total_price']),
-        'products': products,
+        'company': data['shop']['chain'],
+        'date': f'{data['meta']['date'].strftime("%d.%m.%Y")} {data['meta']['time'].strftime("%H:%M")}',
+        'total': str(float(data['purchase']['total_price'])),
+        'menu': products,
     }
 
 
