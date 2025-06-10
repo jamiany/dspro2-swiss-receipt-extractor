@@ -9,7 +9,7 @@ def extract_receipt(image):
 
     kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (15, 15))
     closed = cv2.morphologyEx(edged, cv2.MORPH_CLOSE, kernel)
-    
+
     # Find contours
     closed = cv2.dilate(closed, None, iterations=2)
     closed = cv2.erode(closed, None, iterations=2)
@@ -19,7 +19,8 @@ def extract_receipt(image):
 
     # Thresholds
     min_contour_length = 600
-    min_area_size = 75
+    # areas are not reliable -> disabled
+    min_area_size = 0
     min_diameter = 400
 
     filtered_contours = []

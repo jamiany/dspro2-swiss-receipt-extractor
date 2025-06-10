@@ -15,7 +15,7 @@ def generate_receipt_data():
     overall_total_baseline = 0
     overall_discount_baseline = 0
 
-    for _ in range(fake.random_int(1, 20)):
+    for _ in range(product_count()):
         # prices between 0.45 - 50.00
         price_baseline = random_price()
 
@@ -104,6 +104,17 @@ def generate_label(data):
         'total_price': float(data['purchase']['total_price']),
         'products': products,
     }
+
+
+def product_count():
+    product_count = fake.random_int(1, 7)
+
+    i = 0
+    while i < 5 and fake.random_int(0, 1) == 0:
+        product_count += fake.random_int(1, 3)
+        i += 1
+
+    return product_count
 
 
 def random_price():
