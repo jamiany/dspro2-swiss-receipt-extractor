@@ -6,7 +6,14 @@ def generate_tax(data):
     shop = data['shop']
     purchase = data['purchase']
 
-    with open('sections/tax/template_1.html') as f:
+    templates = [
+        'template_1',
+        'template_2',
+    ]
+
+    name = templates[rng.randint(len(templates))]
+
+    with open(f'sections/tax/{name}.html') as f:
         template = Template(f.read())
 
         tax_table = {}

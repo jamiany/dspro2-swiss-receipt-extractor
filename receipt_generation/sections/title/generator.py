@@ -7,7 +7,13 @@ import numpy.random as rng
 def generate_title(data):
     shop = data['shop']
 
-    with open('sections/title/template_title.html') as f:
+    templates = [
+        'template_title',
+    ]
+
+    name = templates[rng.randint(len(templates))]
+
+    with open(f'sections/title/{name}.html') as f:
         template = Template(f.read())
 
         v = rng.rand()

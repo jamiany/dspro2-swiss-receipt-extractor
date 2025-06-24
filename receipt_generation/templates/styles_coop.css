@@ -100,6 +100,11 @@ td, th {
     border-bottom: 2px dashed black;
 }
 
+.center {
+    display: flex;
+    justify-content: center;
+}
+
 /* SPECIFIC */
 
 table {
@@ -133,6 +138,8 @@ table {
     word-wrap: break-word;
     word-break: break-all;
     text-align: left;
+
+    /* MIGROS: centered */
 }
 
 .tax {
@@ -141,6 +148,8 @@ table {
 
 .tax table {
     width: 84mm;
+
+    /* MIGROS: full width, all but last column left aligned */
 }
 
 .coupon table td:first-child {
@@ -152,5 +161,9 @@ table {
 }
 
 .loyalty-program table td:first-child {
+    text-align: left;
+}
+
+.technical-details table td, .technical-details table th {
     text-align: left;
 }

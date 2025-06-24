@@ -2,10 +2,15 @@ import cv2
 import numpy as np
 
 def extract_receipt(image):
+    img_height, img_width, _ = image.shape
+
     # Find edges
-    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-    blurred = cv2.GaussianBlur(gray, (5, 5), 0)
-    edged = cv2.Canny(blurred, 75, 200)
+    hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
+    H, S, V = cv2.split(hsv)
+
+    edges_s = cv2.Canny(S, 75, 200)
+    edges_h = cv2.Canny(H, 75, 200)
+    edged = cv2.bitwise_or(edges_s, edges_h)
 
     kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (15, 15))
     closed = cv2.morphologyEx(edged, cv2.MORPH_CLOSE, kernel)
@@ -18,10 +23,10 @@ def extract_receipt(image):
     contours = sorted(contours, key=cv2.contourArea, reverse=True)
 
     # Thresholds
-    min_contour_length = 600
+    min_contour_length = img_height // 3
     # areas are not reliable -> disabled
     min_area_size = 0
-    min_diameter = 400
+    min_diameter = img_height // 4
 
     filtered_contours = []
 
@@ -50,6 +55,9 @@ def extract_receipt(image):
 
     peri = cv2.arcLength(hull, True)
     approx = cv2.approxPolyDP(hull, 0.015 * peri, True)
+
+    if not len(approx) == 4:
+        return None
 
     # Compute approximate output size
     corners = order_points(approx.reshape((4, 2)))

@@ -2,10 +2,21 @@
 <div class="section total">
     <div class="content-split">
         <h2>Total CHF</h2>
-        <h2 class="border-constraint">{{ total_price }}<span class="border" style="top: -7mm; left: 0; width: 100%;"></span></h2>
+            <h2 class="border-constraint">
+                {{ total_price }}
+                {% if small_border == 0 %}
+                    <span class="border" style="top: -7mm; left: 0; width: 100%;"></span>
+                {% endif %}
+        </h2>
     </div>
-    <div class="content-split bold">
+    <div class="content-split {{ bold }}">
         <span>{{ payment_method }}</span>
         <span>{{ total_price }}</span>
     </div>
+    {% if style == 0 %}
+        <div class="content-split {{ bold }}">
+            <span>Total in EUR</span>
+            <span>{{ total_price_currency }}</span>
+        </div>
+    {% endif %}
 </div>

@@ -38,7 +38,8 @@ def process(input):
         pass
 
     # Save the result
-    os.mkdir(f'out/{name}')
+    if not os.path.exists(f'out/{name}'):
+        os.mkdir(f'out/{name}')
 
     cv2.imwrite(f'out/{name}/input.jpg', image_result)
     if preprocessed is not None:
