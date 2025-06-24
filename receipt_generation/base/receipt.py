@@ -1,6 +1,7 @@
 from faker import Faker
 from receipt_generation.base.location_generator import FakeLocationProvider
 from receipt_generation.base.grocery_generator import FakeGroceryProvider
+from datetime import datetime, timedelta
 
 Faker.seed(42)
 
@@ -40,6 +41,9 @@ def generate_receipt_data():
         products.append({
             'name': fake.grocery(),
             'amount': amount,
+            'tax_id': 0,
+            'discounted_price': 0.0,
+            'discount': 0.0,
             'price': price_from_baseline(price_baseline),
             'total': price_from_baseline(total_baseline),
         })
@@ -66,7 +70,7 @@ def generate_receipt_data():
         'meta': {
             'img_seed': fake.random_number(20),
             'gen_seed': fake.random_number(20),
-            'date': fake.date_object(),
+            'date': fake.date_time_between_dates(datetime_start=datetime(2023, 1, 1), datetime_end=datetime(2025, 3, 30)),
             'time': fake.time_object(),
         },
         'purchase': {
@@ -82,21 +86,21 @@ def generate_label(data):
     products = []
 
     for product in data['purchase']['products']:
-        discounted_price = None
-        if not product['discounted_price'] == product['price']:
-            discounted_price = float(product['discounted_price'])
+        # discounted_price = None
+        # if not product['discounted_price'] == product['price']:
+        #     discounted_price = float(product['discounted_price'])
 
         products.append({
-            'nm': product['name'],
-            'cnt': str(product['amount']),
+            'name': product['name'],
+            'amount': str(product['amount']),
             'price': str(float(product['total'])),
         })
 
     return {
-        'company': data['shop']['chain'],
-        'date': f'{data['meta']['date'].strftime("%d.%m.%Y")} {data['meta']['time'].strftime("%H:%M")}',
-        'total': str(float(data['purchase']['total_price'])),
-        'menu': products,
+        'shop_name': data['shop']['chain'],
+        'date': f'{data['meta']['date'].strftime("%d.%m.%Y")}',
+        'products': products,
+        'total': str(float(data['purchase']['total_price']))
     }
 
 

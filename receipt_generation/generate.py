@@ -11,7 +11,6 @@ from generate_html import generate_html_receipt
 from preprocessing.extraction.extract_receipt import extract_receipt
 from render_html import render_html
 
-
 def generate(count):
     rng.seed(42)
 
@@ -22,7 +21,6 @@ def generate(count):
 
     with Pool() as pool:
         pool.map(process, map.items())
-
 
 def process(input):
     name, data = input
@@ -37,12 +35,9 @@ def process(input):
     except Exception:
         pass
 
-    # Save the result
+    filename = f'{name:03d}.jpg'
+    cv2.imwrite(f'out/{filename}', preprocessed)
 
-    # cv2.imwrite(f'out/{name}/input.jpg', image_result)
-    if preprocessed is not None:
-        cv2.imwrite(f'out/{name:04d}.jpg', preprocessed)
-
-    with open(f'out/{name:04d}.json', 'w') as f:
-        f.write(json.dumps(generate_label(data), ensure_ascii=False))
-
+    with open(f'out/metadata.jsonl', 'a', encoding='utf8') as outfile:
+        json.dump({"text":generate_label(data),"file_name":filename}, outfile, ensure_ascii=False)
+        outfile.write('\n')
