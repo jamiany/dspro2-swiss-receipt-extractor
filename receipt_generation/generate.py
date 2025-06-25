@@ -1,5 +1,6 @@
 import json
 import os
+import shutil
 from multiprocessing import Pool
 from uuid import uuid4
 
@@ -12,21 +13,35 @@ from preprocessing.extraction.extract_receipt import extract_receipt
 from render_html import render_html
 
 
-def generate(count):
+def generate_split(train, valid):
+    if os.path.exists('out'):
+        shutil.rmtree('out')
+    os.mkdir('out')
+    os.mkdir('out/train')
+    os.mkdir('out/valid')
+
     rng.seed(42)
 
-    map = {}
+    generate('out/train', train)
+    generate('out/valid', valid)
 
-    for _ in range(count):
-        map[str(uuid4())] = generate_receipt_data()
+
+def generate(out_dir, count):
+    key_map = {}
+
+    for i in range(count):
+        key_map[i] = generate_receipt_data()
+
+    inputs = [(out_dir, count, name, data) for name, data in key_map.items()]
 
     with Pool() as pool:
-        pool.map(process, map.items())
+        pool.map(process, inputs)
 
 
 def process(input):
-    name, data = input
+    out_dir, count, name, data = input
 
+    # generate data
     generate_html_receipt(name, data)
 
     image_result = render_html(name)
@@ -37,14 +52,16 @@ def process(input):
     except Exception:
         pass
 
-    # Save the result
-    if not os.path.exists(f'out/{name}'):
-        os.mkdir(f'out/{name}')
+    # save the result
+    number_places = len(str(count))
+    if int(str(count)[0]) == 1:
+        number_places -= 1
+    filename = str(name).zfill(number_places) + '.jpg'
 
-    cv2.imwrite(f'out/{name}/input.jpg', image_result)
     if preprocessed is not None:
-        cv2.imwrite(f'out/{name}/preprocessed.jpg', preprocessed)
+        cv2.imwrite(f'{out_dir}/{filename}', preprocessed)
 
-    with open(f'out/{name}/label.json', 'w') as f:
-        f.write(json.dumps(generate_label(data), ensure_ascii=False))
+    with open(f'{out_dir}/metadata.jsonl', 'a', encoding='utf8') as f:
+        json.dump({"text": generate_label(data), "file_name": filename}, f, ensure_ascii=False)
+        f.write('\n')
 

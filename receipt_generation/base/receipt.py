@@ -85,23 +85,16 @@ def generate_label(data):
     products = []
 
     for product in data['purchase']['products']:
-        discounted_price = None
-        if not product['discounted_price'] == product['price']:
-            discounted_price = float(product['discounted_price'])
-
         products.append({
             'name': product['name'],
-            'amount': product['amount'],
-            'unit_price': float(product['price']),
-            'discounted_price': discounted_price,
-            'price': float(product['total']),
+            'amount': str(product['amount']),
+            'price': product['total'],
         })
 
     return {
         'shop_name': data['shop']['chain'],
         'date': data['meta']['date'].strftime("%d.%m.%Y"),
-        'time': data['meta']['time'].strftime("%H:%M"),
-        'total_price': float(data['purchase']['total_price']),
+        'total': data['purchase']['total_price'],
         'products': products,
     }
 

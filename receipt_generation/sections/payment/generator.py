@@ -9,7 +9,7 @@ def generate_payment(data):
 
     templates = [
         'template_mastercard',
-        'template_mastercard_2',
+        # 'template_mastercard_2',
     ]
 
     name = templates[rng.randint(len(templates))]

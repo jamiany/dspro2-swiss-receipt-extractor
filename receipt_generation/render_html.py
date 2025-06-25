@@ -65,9 +65,9 @@ def render_html(name):
     dsize = (1736, 2312)
 
     zoom = rng.randint(-10, 11)
-    rotation = rng.randint(-18, 19)
-    forward_tilt = rng.randint(-11, 12)
-    sideways_tilt = rng.randint(-11, 12)
+    rotation = rng.randint(-14, 15)
+    forward_tilt = rng.randint(-8, 9)
+    sideways_tilt = rng.randint(-8, 9)
 
     pos_from, pos_to = get_to_transformation(
         background_width,
@@ -82,11 +82,13 @@ def render_html(name):
     matrix = cv2.getPerspectiveTransform(pos_from, pos_to)
     result = cv2.warpPerspective(background, matrix, dsize, borderMode=cv2.BORDER_TRANSPARENT)
 
-    if rng.rand() > 0.90:
-        pass
-        # result = cv2.rotate(result, cv2.ROTATE_180)
+    h, w = result.shape[:2]
+    sigma = rng.randint(0, 30)
+    gauss = np.random.normal(0, sigma, (h, w, 3)).astype(np.int16)
+    noisy = cv2.add(result.astype(np.int16), gauss)
+    noisy = np.clip(noisy, 0, 255).astype(np.uint8)
 
-    return result
+    return noisy
 
 
 def has_off_screen_corner(corners, dsize):

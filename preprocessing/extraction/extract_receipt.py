@@ -5,12 +5,23 @@ def extract_receipt(image):
     img_height, img_width, _ = image.shape
 
     # Find edges
-    hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
-    H, S, V = cv2.split(hsv)
+    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    blurred = cv2.GaussianBlur(gray, (5, 5), 0)
 
-    edges_s = cv2.Canny(S, 75, 200)
-    edges_h = cv2.Canny(H, 75, 200)
-    edged = cv2.bitwise_or(edges_s, edges_h)
+    hsv = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+    R, G, B = cv2.split(hsv)
+
+    R_blur = cv2.GaussianBlur(R, (5, 5), 0)
+    G_blur = cv2.GaussianBlur(G, (5, 5), 0)
+    B_blur = cv2.GaussianBlur(B, (5, 5), 0)
+
+    edges_gray = cv2.Canny(blurred, 75, 200)
+    edges_r = cv2.Canny(R_blur, 75, 200)
+    edges_g = cv2.Canny(G_blur, 75, 200)
+    edges_b = cv2.Canny(B_blur, 75, 200)
+    edged = cv2.bitwise_or(edges_gray, edges_r)
+    edged = cv2.bitwise_or(edged, edges_g)
+    edged = cv2.bitwise_or(edged, edges_b)
 
     kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (15, 15))
     closed = cv2.morphologyEx(edged, cv2.MORPH_CLOSE, kernel)

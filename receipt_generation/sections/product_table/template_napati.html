@@ -34,7 +34,7 @@ th, td {
                 <td> {{ product.amount }}</td>
                 <td>{{ product.price }}</td>
                 {% if product.discounted_price != product.price %}
-                    <td>{{ product.price - product.discounted_price }} </td>
+                    <td>{{ product.price|float - product.discounted_price|float }} </td>
                 {% else %}
                     <td></td>
                 {% endif %}
@@ -44,7 +44,7 @@ th, td {
 
             {% if product.discount != '0.00' %}
                 <tr>
-                    <td class="bold">  Rabatt TODO</td>
+                    <td class="bold">  Rabatt</td>
                     <td></td>
                     <td></td>
                     <td></td>
