@@ -1,0 +1,48 @@
+<style>
+.product-table td:first-child, .product-table th:first-child, .product-table td:nth-child(2), .product-table th:nth-child(2) {
+    text-align: left;
+}
+
+.product-table tr:first-child th {
+    padding-bottom: 5mm;
+}
+
+th, td {
+    font-family: monospace;
+    font-weight: 400;
+    font-style: normal;
+
+    font-size: 14px;
+    line-height: 14px;
+
+    white-space: pre;
+}
+</style>
+<div class="section product-table">
+    <table>
+        <!-- TODO make header optional -->
+        <tr>
+            <th></th>
+            <th>Artikel</th>
+            <th>Preis</th>
+            <th>Total</th>
+        </tr>
+        {% for product in products %}
+            <tr>
+                <td>{{ product.amount }}x</td>
+                <td>{{ product.name }}</td>
+                <td>{{ product.tax_id }} {{ product.price }}</td>
+                <td>{{ product.total }}</td>
+            </tr>
+
+            {% if product.discount != '0.00' %}
+                <tr>
+                    <td></td>
+                    <td>  Extra</td>
+                    <td></td>
+                    <td>{{ product.discount }}-   </td>
+                </tr>
+            {% endif %}
+        {% endfor %}
+    </table>
+</div>

@@ -22,3 +22,18 @@ We will use GitHub Projects as our Kanban tool.
 ## Experiment Tracking Tool
 
 We will use Weights & Biases as our experiment tracking tool.
+
+## Code Base
+
+### Generate Data
+
+open receipts_generation/generate.ipynb.
+
+set train and test data splits and run it.
+
+this will generate train and test data and save the pre-processed images with the labels
+
+### Pre-processing
+
+to preprocess an image call `extract_receipt(img)` from the file preprocessing/extraction/extract_receipt.py
+

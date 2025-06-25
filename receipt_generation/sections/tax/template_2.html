@@ -1,0 +1,25 @@
+
+<div class="section tax">
+    <span class="border" style="top: -2mm; left: 0; width: 100%;"></span>
+    <span class="border" style="bottom: -2mm; left: 0; width: 100%;"></span>
+    <div class="content-split">
+        <span># MWST.-Nummer</span>
+        <span>{{ tax_number }} MWST</span>
+    </div>
+    <table>
+        <tr>
+            <th>GR</th>
+            <th>Satz</th>
+            <th>TOTAL</th>
+            <th>MWST</th>
+        </tr>
+        {% for tax_value in tax_list %}
+        <tr>
+            <td>{{ tax_value.id }}</td>
+            <td>{{ tax_value.percentage }} %</td>
+            <td>{{ tax_value.total }}</td>
+            <td>{{ tax_value.tax }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>

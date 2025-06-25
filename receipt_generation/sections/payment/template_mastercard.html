@@ -1,0 +1,16 @@
+
+<div class="section payment">
+    <span class="border" style="top: -3mm; left: 0; width: 100%;"></span>
+    <span class="border" style="bottom: -3mm; left: 0; width: 100%;"></span>
+    <div>
+        <div class="content-split">
+            <span>Debit</span>
+            <span>{{ payment_method }} contactless</span>
+        </div>
+        <span>#XXXXXXXXXXXX{{ digit4 }}/{{ date }}/{{ time }}/{{ digit8 }}/*{{ digit6 }}*{{ digit11 }}/1A2B3C/{{ digit11 }}#</span>
+        <div class="content-split">
+            <span>Total-EFT CHF:</span>
+            <span>{{ total_price }}</span>
+        </div>
+    </div>
+</div>
