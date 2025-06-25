@@ -36,3 +36,4 @@ this will generate train and test data and save the pre-processed images with th
 ### Pre-processing
 
 to preprocess an image call `extract_receipt(img)` from the file preprocessing/extraction/extract_receipt.py
+
