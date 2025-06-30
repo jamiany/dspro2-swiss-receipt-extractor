@@ -1,0 +1,20 @@
+
+<div class="section tax">
+    <span>{{ chain }}, {{ tax_number }} MWST</span>
+    <table>
+        <tr>
+            <th>GR</th>
+            <th>MWST%</th>
+            <th>TOTAL</th>
+            <th>MWST</th>
+        </tr>
+        {% for tax_value in tax_list %}
+        <tr>
+            <td>{{ tax_value.id }}</td>
+            <td>{{ tax_value.percentage }}</td>
+            <td>{{ tax_value.total }}</td>
+            <td>{{ tax_value.tax }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>

@@ -1,0 +1,156 @@
+
+html, body, h1, h2, h3, h4, h5, h6, p {
+    margin: 0;
+}
+
+p {
+    white-space: pre;
+}
+
+html, th, td {
+    /*
+    font-family: "Courier New";
+    font-size: 14px;
+    font-weight: normal;
+     */
+
+    /*
+    font-family: "Fragment Mono", monospace;
+    font-weight: 400;
+    font-style: normal;
+     */
+
+    font-family: "Roboto Mono", monospace;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+
+    font-size: 14px;
+    line-height: 14px;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+h1 {
+    font-family: Arial;
+    font-size: 40px;
+    line-height: 40px;
+    font-weight: 700;
+}
+
+h2 {
+    font-size: 30px;
+    line-height: 30px;
+    font-weight: 700;
+}
+
+h3 {
+    font-size: 20px;
+    line-height: 20px;
+    font-weight: 700;
+}
+
+td {
+    white-space: pre;
+}
+
+.wrapper {
+    width: 100vw;
+    height: 100vh;
+    background-color: lightgray;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.content-split {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.receipt {
+    width: 66mm;
+    padding: 7mm;
+    background-color: white;
+
+    text-align: center;
+}
+
+.receipt .body {
+    width: 132mm;
+    transform: scaleX(0.5);
+    transform-origin: left;
+}
+
+/* SECTIONS */
+
+.section {
+    position: relative;
+    margin: 5mm 0;
+}
+
+.left {
+    text-align: left;
+}
+
+.total h2 {
+    margin-bottom: 3mm;
+}
+
+.border-constraint {
+    position: relative;
+}
+
+.border {
+    position: absolute;
+    border-bottom: 2px dashed black;
+}
+
+.border-solid {
+    border-bottom-style: solid;
+}
+
+/* SPECIFIC */
+
+table {
+    width: 100%;
+    text-align: right;
+
+    border-spacing: 0;
+
+    font-size: 14px;
+    line-height: 14px;
+}
+
+.product-table table td:nth-child(-n + 3), .product-table table th:nth-child(-n + 3) {
+    text-align: left;
+}
+
+.tax table {
+    width: 60mm;
+    text-align: left;
+}
+
+.total div {
+    width: 84mm;
+
+    margin-bottom: 10mm;
+}
+
+.thank {
+    margin-bottom: 0;
+}
+
+.technical-details {
+    margin: 0;
+}
+
+.technical-details p {
+    white-space: pre-wrap;
+    word-break: break-all;
+    overflow-wrap: break-word;
+}

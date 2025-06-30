@@ -1,3 +1,6 @@
 /data
 /notebook/lightning_logs
 /real-world-application/service/__pycache__
+
+.idea
+.venv
