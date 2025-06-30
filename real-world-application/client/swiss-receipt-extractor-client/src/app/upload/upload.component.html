@@ -1,0 +1,18 @@
+<div class="card mt-5 bg-body-tertiary mx-auto" style="width: 50em;">
+    <div class="card-body">
+        <h6 class="display-6 text-center">Upload your Receipt</h6>
+
+        <div class="mb-3">
+            <input class="form-control" type="file" id="formFile" (change)="onFileSelected($event)">
+        </div>
+
+        <div class="d-grid gap-2">
+            <button type="button" class="btn btn-dark btn-lg mt-3" (click)="upload()">
+                <span class="material-symbols-outlined mr-2">
+                    upload
+                </span>
+            Upload
+        </button>
+        </div>
+    </div>
+</div>
